@@ -1,0 +1,124 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+h3 {
+  display: flex;
+  align-items: center;
+  
+  color: red;
+  width: 80%;
+}
+.logo-text{
+  display: flex;
+  align-items: center;
+  color: black;
+ /* margin-left: 4px;*/
+  
+}
+
+.nav{
+  display: flex;
+  background-color: #A5A9CE;
+  padding: 10px 10px 10px 10px;
+  position: sticky;
+  
+}
+#ul-1{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  gap: 1rem;
+  width: 80%;
+  /*margin-left: 15px;*/
+  padding: 0.5rem;
+  background-color: #C3C5D9;
+  border: 2px solid #C3C5D9;
+  border-radius: 4px;
+  
+}
+ul li{
+  
+  list-style: none;
+}
+li a{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+}
+#ul-1 :hover{
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+
+/* Default styles for Mobile Devices (applied to everything) */
+body {
+  font-size: 14px;
+  
+}
+.sidebar {
+  width: 100%; /* Stacks on top of or below main content */
+}
+
+/* Tablet screens and larger */
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Desktop screens and larger */
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 25%; /* Sits nicely next to main content */
+    float: left;
+  }
+}
+.mid-sec {
+ text-align: center;
+ justify-content: center;
+ 
+}
+/* Base styles for the SVG icon to make it look clickable */
+#nav-svg {
+  cursor: pointer;
+  position: relative;
+  z-index: 1001; /* Keeps the icon above the sidebar */
+}
+
+/* Transform the UL into a hidden sidebar */
+#ul-1 {
+  position: fixed;
+  top: 0;
+  right: -250px; /* Hides it completely off the right side */
+  width: 250px;
+  height: 100vh;
+  background-color: #222; /* Choose your sidebar background color */
+  margin: 0;
+  padding: 80px 20px 20px 20px; /* Space at top so links clear the nav bar */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  list-style: none;
+  
+  /* This creates the smooth sliding transition */
+  transition: right 0.2s ease-in-out; 
+  z-index: 1000;
+}
+
+/* Style the links inside the sidebar */
+#ul-1 li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+/* This class will be added by JavaScript to slide the menu in */
+#ul-1.open {
+  right: 0; 
+}
