@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All-in-One Media Station</title>
+    <link rel="stylesheet" href="style.css">
+  <script src="f.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen p-4 md:p-8">
+
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <header class="text-center py-4 border-b border-gray-900">
+      <h1 class="text-2xl font-black text-purple-500 tracking-wider">UNIVERSAL PLAYBACK STATION</h1>
+      <p class="text-xs text-gray-400 mt-1">Select any file type below to load it instantly inside this page.</p>
+    </header>
+
+    <section class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow-2xl">
+      <h2 id="player-title" class="text-sm font-bold tracking-widest text-purple-400 uppercase mb-3">
+        System Ready: Select a File
+      </h2>
+      
+      <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden flex items-center justify-center border border-gray-800">
+        
+        <div id="view-empty" class="text-center p-4">
+          <p class="text-gray-500 text-sm">No media file active</p>
+        </div>
+
+        <video id="view-video" class="hidden w-full h-full object-contain" controls></video>
+
+        <div id="view-audio" class="hidden w-full px-8">
+          <audio class="w-full" controls></audio>
+        </div>
+
+        <img id="view-image" class="hidden w-full h-full object-contain" alt="Viewer Container">
+
+        <iframe id="view-doc" class="hidden w-full h-full bg-white" src=""></iframe>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <div class="bg-gray-900/50 border border-gray-900 p-4 rounded-xl space-y-3">
+        <h3 class="text-sm font-bold text-gray-400 tracking-wider uppercase border-b border-gray-800 pb-2">🎬 Live Streaming Assets</h3>
+        
+        <button onclick="playMedia('video', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'Big Buck Bunny (HD Video File)')" 
+                class="w-full text-left bg-gray-900 hover:bg-purple-950/40 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-sm transition">
+          <span>🎥 Stream Video Episode</span>
+          <span class="text-xs bg-green-900/50 text-green-400 font-bold px-2 py-0.5 rounded">MP4</span>
+        </button>
+
+        <button onclick="playMedia('audio', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 'Synthwave Lo-Fi Beat (Audio Track)')" 
+                class="w-full text-left bg-gray-900 hover:bg-purple-950/40 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-sm transition">
+          <span>🎵 Play Audio Track</span>
+          <span class="text-xs bg-blue-900/50 text-blue-400 font-bold px-2 py-0.5 rounded">MP3</span>
+        </button>
+
+        <button onclick="playMedia('image', 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000', 'High-Res Landscape Presentation Image')" 
+                class="w-full text-left bg-gray-900 hover:bg-purple-950/40 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-sm transition">
+          <span>📸 View Photo Gallery File</span>
+          <span class="text-xs bg-purple-900/50 text-purple-400 font-bold px-2 py-0.5 rounded">JPG</span>
+        </button>
+      </div>
+
+      <div class="bg-gray-900/50 border border-gray-900 p-4 rounded-xl space-y-3">
+        <h3 class="text-sm font-bold text-gray-400 tracking-wider uppercase border-b border-gray-800 pb-2">📄 Shared Cloud Files</h3>
+        
+        <button onclick="playMedia('doc', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', 'System Technical Documentation Manual')" 
+                class="w-full text-left bg-gray-900 hover:bg-purple-950/40 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-sm transition">
+          <span>📑 Open Document PDF Inline</span>
+          <span class="text-xs bg-red-900/50 text-red-400 font-bold px-2 py-0.5 rounded">PDF</span>
+        </button>
+
+        <a href="https://calibre-ebook.com/downloads/demos/demo.docx" 
+           class="w-full text-left bg-gray-900 hover:bg-purple-950/40 p-3 rounded-lg border border-gray-800 flex items-center justify-between text-sm transition">
+          <span>📦 Extract Backup ZIP Package</span>
+          <span class="text-xs bg-yellow-900/50 text-yellow-400 font-bold px-2 py-0.5 rounded">ZIP / DOCX</span>
+        </a>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script>
+    function playMedia(fileType, fileUrl, fileTitle) {
+      // 1. Get references to all structural element windows
+      const titleBox = document.getElementById('player-title');
+      const emptyView = document.getElementById('view-empty');
+      const videoEl = document.getElementById('view-video');
+      const audioContainer = document.getElementById('view-audio');
+      const audioEl = audioContainer.querySelector('audio');
+      const imageEl = document.getElementById('view-image');
+      const docEl = document.getElementById('view-doc');
+
+      // 2. Clear out any currently playing stream states completely
+      videoEl.pause();
+      audioEl.pause();
+
+      // 3. Hide every single element container inside the player canvas viewport
+      emptyView.classList.add('hidden');
+      videoEl.classList.add('hidden');
+      audioContainer.classList.add('hidden');
+      imageEl.classList.add('hidden');
+      docEl.classList.add('hidden');
+
+      // 4. Update Header Meta Title Text Info
+      titleBox.innerText = `Viewing: ${fileTitle}`;
+
+      // 5. Check requested type, unhide that container window, and configure stream link path
+      if (fileType === 'video') {
+        videoEl.src = fileUrl;
+        videoEl.classList.remove('hidden');
+        videoEl.load();
+        videoEl.play();
+      } 
+      else if (fileType === 'audio') {
+        audioEl.src = fileUrl;
+        audioContainer.classList.remove('hidden');
+        audioEl.load();
+        audioEl.play();
+      } 
+      else if (fileType === 'image') {
+        imageEl.src = fileUrl;
+        imageEl.classList.remove('hidden');
+      } 
+      else if (fileType === 'doc') {
+        docEl.src = fileUrl;
+        docEl.classList.remove('hidden');
+      }
+
+      // 6. Automatically smooth-scroll to top window area view space on mobile views
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
